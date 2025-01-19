@@ -5,11 +5,20 @@ import SearchBar from "@/components/SearchBar";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 
-export default async function Home({
-    searchParams,
-}: {
-    searchParams?: { [key: string]: string | undefined };
-}) {
+import { Metadata } from "next";
+
+interface HomeProps {
+    searchParams: { [key: string]: string | undefined };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: "Car Catalogue",
+        description: "Explore the cars you might like.",
+    };
+}
+
+export default async function Home({ searchParams }: HomeProps) {
     const manufacturer = searchParams?.manufacturer || "";
     const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
     const fuel = searchParams?.fuel || "";
