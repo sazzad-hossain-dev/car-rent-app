@@ -13,7 +13,6 @@ interface SearchParams {
     model?: string;
 }
 
-// This is the correct type expected by Next.js
 export default async function Home({
     searchParams,
 }: {
