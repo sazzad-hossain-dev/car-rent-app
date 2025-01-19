@@ -8,15 +8,22 @@ import { fetchCars } from "@/utils";
 export default async function Home({
     searchParams,
 }: {
-    searchParams?: { [key: string]: string | undefined };
+    searchParams?:
+        | { [key: string]: string | undefined }
+        | Promise<{ [key: string]: string | undefined }>;
 }) {
-    const manufacturer = searchParams?.manufacturer || "";
-    const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
-    const fuel = searchParams?.fuel || "";
-    const limit = searchParams?.limit ? parseInt(searchParams.limit) : 10;
-    const model = searchParams?.model || "";
+    const resolvedSearchParams = await Promise.resolve(searchParams);
 
-    // Fetch car data
+    const manufacturer = resolvedSearchParams?.manufacturer || "";
+    const year = resolvedSearchParams?.year
+        ? parseInt(resolvedSearchParams.year)
+        : 2022;
+    const fuel = resolvedSearchParams?.fuel || "";
+    const limit = resolvedSearchParams?.limit
+        ? parseInt(resolvedSearchParams.limit)
+        : 10;
+    const model = resolvedSearchParams?.model || "";
+
     const allCars = await fetchCars({
         manufacturer,
         year,
