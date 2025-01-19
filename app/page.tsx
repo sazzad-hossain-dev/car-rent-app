@@ -13,20 +13,18 @@ interface SearchParams {
     model?: string;
 }
 
-// Correctly typing the props parameter
+// This is the correct type expected by Next.js
 export default async function Home({
     searchParams,
 }: {
-    searchParams: SearchParams;
+    searchParams: Record<string, string | undefined>;
 }) {
-    // Default values
     const manufacturer = searchParams?.manufacturer || "";
     const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
     const fuel = searchParams?.fuel || "";
     const limit = searchParams?.limit ? parseInt(searchParams.limit) : 10;
     const model = searchParams?.model || "";
 
-    // Fetch car data
     const allCars = await fetchCars({
         manufacturer,
         year,
