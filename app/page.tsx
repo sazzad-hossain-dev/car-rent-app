@@ -5,26 +5,20 @@ import SearchBar from "@/components/SearchBar";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 
-import { Metadata } from "next";
-
+// Correct type for Next.js PageProps
 interface HomeProps {
-    searchParams: { [key: string]: string | undefined };
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Car Catalogue",
-        description: "Explore the cars you might like.",
-    };
+    searchParams?: Record<string, string | undefined>; // Matches what Next.js provides
 }
 
 export default async function Home({ searchParams }: HomeProps) {
+    // Default values
     const manufacturer = searchParams?.manufacturer || "";
     const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
     const fuel = searchParams?.fuel || "";
     const limit = searchParams?.limit ? parseInt(searchParams.limit) : 10;
     const model = searchParams?.model || "";
 
+    // Fetch car data
     const allCars = await fetchCars({
         manufacturer,
         year,
