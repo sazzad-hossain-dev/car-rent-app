@@ -8,7 +8,7 @@ import { fetchCars } from "@/utils";
 export default async function Home({
     searchParams,
 }: {
-    searchParams: { [key: string]: string | undefined };
+    searchParams?: { [key: string]: string | undefined };
 }) {
     const manufacturer = searchParams?.manufacturer || "";
     const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
