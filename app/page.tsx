@@ -16,13 +16,15 @@ interface SearchParams {
 export default async function Home({
     searchParams,
 }: {
-    searchParams: Record<string, string | undefined>;
+    searchParams: Promise<Record<string, string | undefined>>;
 }) {
-    const manufacturer = searchParams?.manufacturer || "";
-    const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
-    const fuel = searchParams?.fuel || "";
-    const limit = searchParams?.limit ? parseInt(searchParams.limit) : 10;
-    const model = searchParams?.model || "";
+    const params = await searchParams; // Await the promise if required
+
+    const manufacturer = params?.manufacturer || "";
+    const year = params?.year ? parseInt(params.year) : 2022;
+    const fuel = params?.fuel || "";
+    const limit = params?.limit ? parseInt(params.limit) : 10;
+    const model = params?.model || "";
 
     const allCars = await fetchCars({
         manufacturer,
