@@ -8,7 +8,6 @@ export async function fetchCars(filters: FilterProps) {
         "x-rapidapi-host": "cars-by-api-ninjas.p.rapidapi.com",
     };
 
-    // Default list of manufacturers
     const defaultManufacturers = [
         "BMW",
         "Audi",
@@ -22,13 +21,11 @@ export async function fetchCars(filters: FilterProps) {
         "Tesla",
     ];
 
-    // Initialize the result array
     const cars = [];
 
-    // Determine manufacturers to fetch based on input
     const manufacturersToFetch = manufacturer
-        ? Array(10).fill(manufacturer) // If a manufacturer is provided, fetch it 10 times
-        : defaultManufacturers.sort(() => 0.5 - Math.random()).slice(0, 10); // Otherwise, pick 10 random ones
+        ? Array(10).fill(manufacturer)
+        : defaultManufacturers.sort(() => 0.5 - Math.random()).slice(0, 10);
 
     for (const currentManufacturer of manufacturersToFetch) {
         const queryParams = new URLSearchParams();
@@ -48,15 +45,14 @@ export async function fetchCars(filters: FilterProps) {
                     `Error fetching data for ${currentManufacturer}:`,
                     response.statusText
                 );
-                continue; // Skip to the next manufacturer on failure
+                continue;
             }
 
             const result = await response.json();
             if (result.length > 0) {
-                cars.push(result[0]); // Push the first car result from the API response
+                cars.push(result[0]);
             }
 
-            // Break the loop if we already have 10 cars
             if (cars.length >= 10) break;
         } catch (error) {
             console.error("Error fetching cars:", error);

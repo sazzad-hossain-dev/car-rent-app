@@ -18,7 +18,7 @@ export default async function Home({
 }: {
     searchParams: Promise<Record<string, string | undefined>>;
 }) {
-    const params = await searchParams; // Await the promise if required
+    const params = await searchParams;
 
     const manufacturer = params?.manufacturer || "";
     const year = params?.year ? parseInt(params.year) : 2022;
