@@ -5,12 +5,20 @@ import SearchBar from "@/components/SearchBar";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 
-// Correct type for Next.js PageProps
-interface HomeProps {
-    searchParams?: Record<string, string | undefined>; // Matches what Next.js provides
+interface SearchParams {
+    manufacturer?: string;
+    year?: string;
+    fuel?: string;
+    limit?: string;
+    model?: string;
 }
 
-export default async function Home({ searchParams }: HomeProps) {
+// Correctly typing the props parameter
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: SearchParams;
+}) {
     // Default values
     const manufacturer = searchParams?.manufacturer || "";
     const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
