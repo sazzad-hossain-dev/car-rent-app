@@ -8,20 +8,22 @@ import { fetchCars } from "@/utils";
 export default async function Home({
     searchParams,
 }: {
-    searchParams: {
-        manufacturer?: string;
-        year?: number;
-        fuel?: string;
-        limit?: number;
-        model?: string;
-    };
+    searchParams: Record<string, string | undefined>;
 }) {
+    // Parse and handle `searchParams`
+    const manufacturer = searchParams.manufacturer || "";
+    const year = searchParams.year ? parseInt(searchParams.year, 10) : 2022;
+    const fuel = searchParams.fuel || "";
+    const limit = searchParams.limit ? parseInt(searchParams.limit, 10) : 10;
+    const model = searchParams.model || "";
+
+    // Fetch cars
     const allCars = await fetchCars({
-        manufacturer: searchParams.manufacturer || "",
-        year: searchParams.year || 2022,
-        fuel: searchParams.fuel || "",
-        limit: searchParams.limit || 10,
-        model: searchParams.model || "",
+        manufacturer,
+        year,
+        fuel,
+        limit,
+        model,
     });
 
     const isDataEmpty =
