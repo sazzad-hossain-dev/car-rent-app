@@ -5,19 +5,16 @@ import SearchBar from "@/components/SearchBar";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 
-type SearchParams = { [key: string]: string | undefined };
-
 export default async function Home({
     searchParams,
 }: {
-    searchParams: SearchParams;
+    searchParams: { [key: string]: string | undefined };
 }) {
-    // Parse search parameters safely
-    const manufacturer = searchParams.manufacturer || "";
-    const year = searchParams.year ? parseInt(searchParams.year) : 2022;
-    const fuel = searchParams.fuel || "";
-    const limit = searchParams.limit ? parseInt(searchParams.limit) : 10;
-    const model = searchParams.model || "";
+    const manufacturer = searchParams?.manufacturer || "";
+    const year = searchParams?.year ? parseInt(searchParams.year) : 2022;
+    const fuel = searchParams?.fuel || "";
+    const limit = searchParams?.limit ? parseInt(searchParams.limit) : 10;
+    const model = searchParams?.model || "";
 
     // Fetch car data
     const allCars = await fetchCars({
@@ -60,7 +57,7 @@ export default async function Home({
                 ) : (
                     <div className="home__error-container">
                         <h3 className="text-black text-xl font-bold">
-                            Opps, No results
+                            Oops, no results
                         </h3>
                     </div>
                 )}
