@@ -5,13 +5,14 @@ import SearchBar from "@/components/SearchBar";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 
-export default async function Home(props: {
-    searchParams?: { [key: string]: string | undefined };
-}) {
-    // Safely destructure `searchParams` from props
-    const searchParams = props.searchParams || {};
+type SearchParams = { [key: string]: string | undefined };
 
-    // Parse and handle search parameters
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: SearchParams;
+}) {
+    // Parse search parameters safely
     const manufacturer = searchParams.manufacturer || "";
     const year = searchParams.year ? parseInt(searchParams.year) : 2022;
     const fuel = searchParams.fuel || "";
@@ -27,7 +28,6 @@ export default async function Home(props: {
         model,
     });
 
-    // Handle empty data
     const isDataEmpty =
         !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
